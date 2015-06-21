@@ -3,7 +3,7 @@
 HOW TO USE 'RANDOM PARTICLES' STAGE CONTROLLER
 =================================================
 
-- Install Stage 4.1.1
+- Install Stage 4.1.1 (http://rtv.github.com/Stage)
 - In the stage distribution, go to dir examples/ctrl and open the
 file CMakeLists.txt
 
@@ -34,3 +34,4 @@ SET( PLUGINS
   $ stage random_particles.world
 - go to 'worlds' dir and execute for two robot simulation
   $ stage random_particles2.world
+- Press P to start the simulation
