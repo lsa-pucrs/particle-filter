@@ -1,0 +1,10 @@
+For usage of the MATLAB files:
+
+  -  File named "AAA" is the original version, without MEX.
+  -  File named "AAA_mex" is the modified, MEX-ed version.
+
+The "AAA" file runs with the original functions (e.g. F_estimate_p.m, Fast_ray_cast.m, etc). The MEX file runs with the mex-ed functions (e.g. mexRayCast.c, mexEstimateProb.c, etc). Make modifications accordingly and report them in this readme file.
+
+
+CHANGELOG:
+(Example: <In function "mexRayCast.c"> Change made in line <n>, in order to <reason>)
