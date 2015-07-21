@@ -1,6 +1,5 @@
 % test the car on a map 
 clear all;clc;close all;
-problem = [0 0];
 %% map
 % The map is typed in as a 24x30 matrix
 mapstreacth = 10; % so we dont have to type in a 240x300 matrix
@@ -30,7 +29,7 @@ vl = 1;
 alpha     = [2 50 50 2]*1;
 CovSonars = 2.5;
 global p
-Np = input('Digite o número de partículas: ');
+Np = 50;
 w(1:Np) = 1;
 p = zeros(3,Np);
 w = ones (1,Np);
@@ -110,6 +109,7 @@ for k = 1:ttotal/T
            z = Fast_ray_cast(p(1,i),p(2,i),p(3,i),map,max_range,angles,mapscale,1);%
            for j = 1:length(sonars)
               w(i) = w(i)*F_measurProb(z(j),sonars(j),CovSonars);
+              %test(j) = F_measurProb(z(j),sonars(j),CovSonars);
            end
        end
        
@@ -173,65 +173,3 @@ plot([odometry(1,1) odometry(1,1)+0.05*cos(odometry(3,1))]*mapscale,[odometry(2,
 plot(odometry(1,end)*mapscale,odometry(2,end)*mapscale,'.','Color',[0.3 0.3 0.3],'LineWidth',1.5)
 plot([odometry(1,end) odometry(1,end)+d*cos(odometry(3,end))]*mapscale,[odometry(2,end) odometry(2,end)+d*sin(odometry(3,end))]*mapscale,'Color',[0.3 0.3  0.3],'LineWidth',1.5)
 return
-%% results static
-d = 0.05;
-fig = 1;
-F_anima_map([x(1)*mapscale y(1)*mapscale th(1)], L*mapscale, fig, map,see_sonar(:,1)*mapscale,angles)    
-for i = 1:Np
-    plot(Pplot(1,i)*mapscale,Pplot(2,i)*mapscale,'k.')
-    line([Pplot(1,i) Pplot(1,i)+d*cos(Pplot(3,i))]*mapscale,[Pplot(2,i) Pplot(2,i)+d*sin(Pplot(3,i))]*mapscale,'Color','k');
-end
-
-fig = 2;
-F_anima_map([x(plot_time(1))*mapscale y(plot_time(1))*mapscale th(plot_time(1))], L*mapscale, fig, map,plot_sonar(:,1)*mapscale,angles)    
-plot(x(1:plot_time(1)-5)*mapscale, y(1:plot_time(1)-5)*mapscale,'k','Color',[0.6 0.6 0.6],'LineWidth',2.5)
-for i = Np+1:2*Np
-    plot(Pplot(1,i)*mapscale,Pplot(2,i)*mapscale,'k.')
-    line([Pplot(1,i) Pplot(1,i)+d*cos(Pplot(3,i))]*mapscale,[Pplot(2,i) Pplot(2,i)+d*sin(Pplot(3,i))]*mapscale,'Color','k');
-end 
-
-fig = 3;
-F_anima_map([x(plot_time(2))*mapscale y(plot_time(2))*mapscale th(plot_time(2))], L*mapscale, fig, map,plot_sonar(:,2)*mapscale,angles)    
-plot(x(1:plot_time(2)-5)*mapscale, y(1:plot_time(2)-5)*mapscale,'k','Color',[0.6 0.6 0.6],'LineWidth',2.5)
-for i = 2*Np+1:3*Np
-    plot(Pplot(1,i)*mapscale,Pplot(2,i)*mapscale,'k.')
-    line([Pplot(1,i) Pplot(1,i)+d*cos(Pplot(3,i))]*mapscale,[Pplot(2,i) Pplot(2,i)+d*sin(Pplot(3,i))]*mapscale,'Color','k');
-end 
-
-fig = 4;
-F_anima_map([x(plot_time(3))*mapscale y(plot_time(3))*mapscale th(plot_time(3))], L*mapscale, fig, map,plot_sonar(:,3)*mapscale,angles)    
-plot(x(1:plot_time(3)-5)*mapscale, y(1:plot_time(3)-5)*mapscale,'k','Color',[0.6 0.6 0.6],'LineWidth',2.5)
-for i = 3*Np+1:4*Np
-    plot(Pplot(1,i)*mapscale,Pplot(2,i)*mapscale,'k.')
-    line([Pplot(1,i) Pplot(1,i)+d*cos(Pplot(3,i))]*mapscale,[Pplot(2,i) Pplot(2,i)+d*sin(Pplot(3,i))]*mapscale,'Color','k');
-end 
-
-fig = 5;
-F_anima_map([x(plot_time(4))*mapscale y(plot_time(4))*mapscale th(plot_time(4))], L*mapscale, fig, map,plot_sonar(:,4)*mapscale,angles)    
-plot(x(1:plot_time(4)-5)*mapscale, y(1:plot_time(4)-5)*mapscale,'k','Color',[0.6 0.6 0.6],'LineWidth',2.5)
-for i = 4*Np+1:5*Np
-    plot(Pplot(1,i)*mapscale,Pplot(2,i)*mapscale,'k.')
-    line([Pplot(1,i) Pplot(1,i)+d*cos(Pplot(3,i))]*mapscale,[Pplot(2,i) Pplot(2,i)+d*sin(Pplot(3,i))]*mapscale,'Color','k');
-end 
-
-fig = 6;
-F_anima_map([x(end)*mapscale y(end)*mapscale th(end)], L*mapscale, fig, map,sonars*mapscale,angles)    
-for i = length(Pplot)-Np+1:length(Pplot)
-    plot(Pplot(1,i)*mapscale,Pplot(2,i)*mapscale,'k.','LineWidth',0.1)
-    line([Pplot(1,i) Pplot(1,i)+d*cos(Pplot(3,i))]*mapscale,[Pplot(2,i) Pplot(2,i)+d*sin(Pplot(3,i))]*mapscale,'Color','k');
-end 
-plot(x(1:end-5)*mapscale, y(1:end-5)*mapscale,'k','Color',[0.6 0.6 0.6],'LineWidth',2.5)
-%plot(P(1,1:end-5)*mapscale, P(2,1:end-5)*mapscale,'k','Color',[0.6 0.6 0.6],'LineWidth',2.5)
-hold on
-plot(odometry(1,:)*mapscale,odometry(2,:)*mapscale,'k--')
-plot([odometry(1,1) odometry(1,1)+0.03*cos(odometry(3,1))]*mapscale,[odometry(2,1) odometry(2,1)+0.03*sin(odometry(3,1))]*mapscale,'b');
-%plot(odometry(1,end)*mapscale,odometry(2,end)*mapscale,'*','Color',[0.3 0.3 0.3],'LineWidth',3)
-%plot([odometry(1,end) odometry(1,end)+0.03*cos(odometry(3,end))]*mapscale,[odometry(2,end) odometry(2,end)+0.03*sin(odometry(3,end))]*mapscale,'Color',[0.3 0.3  0.3],'LineWidth',3)
-grid on
-figure
-plot(see_sonar(2,:))
-return
-
-
-
-

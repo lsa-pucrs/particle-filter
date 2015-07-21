@@ -1,4 +1,4 @@
-function [ ] = F_anima(pose,L,fig,axxis)
+function [ ] = F_anima_map(pose,L,fig,map,sonars,angles)
 % ----------------------------------------------------------------------
 %
 % F_anima(pose,L,fig,axxis) Receives the robot pose and plots it in the 
@@ -11,30 +11,41 @@ function [ ] = F_anima(pose,L,fig,axxis)
 %      L     = distance between wheels [m]
 %      fig   = figure number
 %      axxis = figure axis
+%      map   = matrix with map (1=obstacle, 0=free)
 %
-% Must add a map in this function as well
 % ----------------------------------------------------------------------
+
 
 figure(fig);
 clf
-% car "nose"
-line([pose(1) pose(1)+L/2*cos(pose(3))],[pose(2) pose(2)+ L/2*sin(pose(3))]);
+imshow(~map);
+set(gca,'YDir','normal');
 hold on
-axis equal
-axis(axxis);
+
+% car "nose"
+plot([pose(1) pose(1)+L/2*cos(pose(3))],[pose(2) pose(2)+ L/2*sin(pose(3))],'k');
+
 % car "axis"
 plot([pose(1)+L/2*cos(pose(3)+pi/2) pose(1)+L/2*cos(pose(3)-pi/2)],[pose(2)+L/2*sin(pose(3)+pi/2) pose(2)+L/2*sin(pose(3)-pi/2)],'k');
+
 %car body
-ang=pose(3)+ (-pi:pi/20:pi); 
-xp=pose(1)+L/2*cos(ang);
-yp=pose(2)+L/2*sin(ang);
+ang = pose(3) + (-pi:pi/10:pi); 
+xp  = pose(1) + L/2*cos(ang);
+yp  = pose(2) + L/2*sin(ang);
 plot(xp,yp,'k');
-% car "wheels"
-%plot(pose(1)+L/2*cos(pose(3)+pi/2),pose(2)+L/2*sin(pose(3)+pi/2),'ro','LineWidth',1);
-%plot(pose(1)+L/2*cos(pose(3)-pi/2),pose(2)+L/2*sin(pose(3)-pi/2),'ro','LineWidth',1);
-drawnow
-%pause(0.001)
 
-
+%sensors
+if nargin > 4
+   for i = 1:length(sonars) 
+    plot([pose(1) pose(1)+sonars(i)*cos(pose(3)+angles(i))],[pose(2) pose(2)+sonars(i)*sin(pose(3)+angles(i))],'Color',[.6 .6 .6]);
+   end
 end
+
+drawnow
+%keyboard
+pause(0.001)
+end
+
+
+
 
