@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -Wall -I/usr/include
 LDFLAGS= -L/usr/lib
-LIBS= -lgsl -lgslcblas
+LIBS= -lgsl -lgslcblas -lm
 SOURCES=example-ode.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=example-ode
