@@ -4,9 +4,12 @@ clear all;clc;close all;
 %% Build mex
 mex mexFP.c
 mex mexSeed.c
-
+mex mexEncoder.c
+mex mexFastRayCast.c
 %% Set the random seeds
 mexSeed(); % Seed as time(NULL)
+
+diary diary_7.txt
 
 %% map
 % The map is typed in as a 24x30 matrix
@@ -65,8 +68,6 @@ if 0 % to plot, or not to plot?
     return
 end
 
-
-
 %% simulation
 Pplot = [p];
 plot_time = [];
@@ -89,12 +90,20 @@ for k = 1:ttotal/T
       
 %% ray casting   
    %sonars = mexRayCast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1)/mapscale;
-   sonars = Fast_ray_cast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1);
-   sonars = sonars + abs(rand(5,1)-0.5)*covsonars;
-   see_sonar(:,k) = sonars;
+   
+   sonars = Fast_ray_cast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1)
+   sonars = sonars + abs(rand(5,1)-0.5)*covsonars
+   see_sonar(:,k) = sonars
+   disp('-----------------------  mex -----------------------------')
+   sonars = mexFastRayCast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1)
+   sonars'
+   sonars = sonars' + abs(rand(5,1)-0.5)*covsonars
+   see_sonar(:,k) = sonars
 
    %% encoders
-   [dtick_L dtick_R] = F_encoders( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
+   
+   %[dtick_L dtick_R] = mexEncoder( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
+   [dtick_L dtick_R] = F_encoders_2( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
    % this if perturbs the encoder measurements
    if rem(k,50)==0
        dtick_L = dtick_L + 1;
