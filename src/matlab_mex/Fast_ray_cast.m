@@ -10,7 +10,6 @@ function [range]=Fast_ray_cast(xc,yc,theta,map,max_range,angles,mapscale,accurac
 %      accuracy: number of points to be tested in max_range
 % Returns one range per angle.
 
-disp('-------------------------------entro na funcao ----------------------------')
 xc = xc*mapscale;
 yc = yc*mapscale;
 max_range = max_range*mapscale;
@@ -29,7 +28,7 @@ if map(ceil(yc),ceil(xc))==1
     return;
 end
 
-range = max_range*ones(n,1)
+range = max_range*ones(n,1);
 map = map';
 
 for i=1:n    
@@ -52,12 +51,10 @@ for i=1:n
         end
         if map(ceil(x),ceil(y))==1
             %disp('hit')
-            disp('entro')
-            i
             range(i) = dist
             break;
         end
     end
 %    keyboard
 end
-range = range/mapscale;
+range = range/mapscale

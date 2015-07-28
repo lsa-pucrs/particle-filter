@@ -9,7 +9,7 @@ mex mexFastRayCast.c
 %% Set the random seeds
 mexSeed(); % Seed as time(NULL)
 
-diary diary_7.txt
+diary diary_8.txt
 
 %% map
 % The map is typed in as a 24x30 matrix
@@ -88,22 +88,14 @@ for k = 1:ttotal/T
    [t,cont] = ode23(@F_dif_drive_car,[0 T],[x(k) y(k) th(k)],options,vr,vl,R,L);
    x(k+1) = cont(end,1); y(k+1) = cont(end,2); th(k+1) = cont(end,3);
       
-%% ray casting   
-   %sonars = mexRayCast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1)/mapscale;
-   
-   sonars = Fast_ray_cast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1)
-   sonars = sonars + abs(rand(5,1)-0.5)*covsonars
-   see_sonar(:,k) = sonars
-   disp('-----------------------  mex -----------------------------')
-   sonars = mexFastRayCast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1)
-   sonars'
-   sonars = sonars' + abs(rand(5,1)-0.5)*covsonars
-   see_sonar(:,k) = sonars
+%% ray casting
+   sonars = mexFastRayCast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1, covsonars);
+   see_sonar(:,k) = sonars;
 
-   %% encoders
+%% encoders
    
-   %[dtick_L dtick_R] = mexEncoder( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
-   [dtick_L dtick_R] = F_encoders_2( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
+   [dtick_L dtick_R] = mexEncoder( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
+   %[dtick_L dtick_R] = F_encoders( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
    % this if perturbs the encoder measurements
    if rem(k,50)==0
        dtick_L = dtick_L + 1;
