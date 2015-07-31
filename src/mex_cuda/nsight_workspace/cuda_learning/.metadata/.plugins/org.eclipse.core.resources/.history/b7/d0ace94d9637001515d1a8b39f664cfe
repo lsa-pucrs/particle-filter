@@ -1,0 +1,61 @@
+/*
+ * vecAdd.cu
+ *
+ *  Created on: Jul 31, 2015
+ *      Author: lsa
+ */
+
+#include <stdio.h>
+
+#define N 20
+
+__global__ void vecAdd(int *a, int *b, int *c){
+	//int i = blockIdx.x;		//Using blocks
+	int i = threadIdx.x;	//Using threads
+	c[i] = a[i] + b[i];
+}
+
+int main(){
+	int *a, *b, *c;				//Host side arrays
+	int *d_a, *d_b, *d_c;		//Device side arrays
+	int size = N*sizeof(int);	//Size of N integers
+
+	//Allocate device copies of a, b and c
+	cudaMalloc((void**)&d_a, size);
+	cudaMalloc((void**)&d_b, size);
+	cudaMalloc((void**)&d_c, size);
+
+	//Allocate host side arrays
+	a = (int*)malloc(size);
+	b = (int*)malloc(size);
+	c = (int*)malloc(size);
+
+	//Populate the arrays
+	int i;
+	for(i = 0; i<N; i++){
+		a[i] = 10;
+		b[i] = 10;
+	}
+
+	//Copy inputs to device
+	cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
+	cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
+
+	//Launch kernel
+	//vecAdd<<<N,1>>>(d_a, d_b, d_c); //Using blocks
+	vecAdd<<<N,N>>>(d_a, d_b, d_c); //Using threads
+
+	//Copy result back to host
+	cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
+
+	//Cleanup
+	cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+
+	//Print
+	printf("\nResults\n");
+	for(i = 0; i<N; i++){
+		printf("GPU c[%d]: %d  |  CPU c[%d]: %d\n", i, c[i], i, a[i]+b[i]);
+	}
+
+	return 0;
+}

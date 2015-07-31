@@ -1,0 +1,32 @@
+
+**** Build of configuration Debug for project cuda_learning ****
+
+make all 
+Building file: ../vector_addition/vecAdd.cu
+Invoking: NVCC Compiler
+nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30 -odir "vector_addition" -M -o "vector_addition/vecAdd.d" "../vector_addition/vecAdd.cu"
+nvcc --compile -G -O0 -g -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "vector_addition/vecAdd.o" "../vector_addition/vecAdd.cu"
+Finished building: ../vector_addition/vecAdd.cu
+ 
+Building file: ../addition/add.cu
+Invoking: NVCC Compiler
+nvcc -G -g -O0 -gencode arch=compute_30,code=sm_30 -odir "addition" -M -o "addition/add.d" "../addition/add.cu"
+nvcc --compile -G -O0 -g -gencode arch=compute_30,code=compute_30 -gencode arch=compute_30,code=sm_30  -x cu -o  "addition/add.o" "../addition/add.cu"
+Finished building: ../addition/add.cu
+ 
+Building target: cuda_learning
+Invoking: NVCC Linker
+nvcc  -link -o  "cuda_learning"  ./vector_addition/vecAdd.o  ./addition/add.o   
+./addition/add.o: In function `main':
+/home/lsa/repos/particle-filter/src/mex_cuda/nsight_workspace/cuda_learning/Debug/../addition/add.cu:14: multiple definition of `main'
+./vector_addition/vecAdd.o:/home/lsa/repos/particle-filter/src/mex_cuda/nsight_workspace/cuda_learning/Debug/../vector_addition/vecAdd.cu:17: first defined here
+./addition/add.o: In function `vecAdd(int*, int*, int*)':
+/home/lsa/repos/particle-filter/src/mex_cuda/nsight_workspace/cuda_learning/Debug/../addition/add.cu:10: multiple definition of `vecAdd(int*, int*, int*)'
+./vector_addition/vecAdd.o:/home/lsa/repos/particle-filter/src/mex_cuda/nsight_workspace/cuda_learning/Debug/../vector_addition/vecAdd.cu:12: first defined here
+./addition/add.o: In function `__device_stub__Z6vecAddPiS_S_(int*, int*, int*)':
+/tmp/tmpxft_00006516_00000000-3_add.cudafe1.stub.c:7: multiple definition of `__device_stub__Z6vecAddPiS_S_(int*, int*, int*)'
+./vector_addition/vecAdd.o:/tmp/tmpxft_000064dc_00000000-3_vecAdd.cudafe1.stub.c:7: first defined here
+collect2: ld returned 1 exit status
+make: *** [cuda_learning] Error 1
+
+**** Build Finished ****

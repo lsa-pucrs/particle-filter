@@ -1,0 +1,88 @@
+/*
+ * add.cu
+ *
+ *  Created on: Jul 31, 2015
+ *      Author: lsa
+ */
+
+#include <stdio.h>
+
+#define N 20
+#define THREADS_PER_BLOCK 10
+
+/* Kernel for running dot multiplication with threads and blocks */
+__global__ void dot(int *a, int *b, int *c){
+	__shared__ int temp[THREADS_PER_BLOCK];
+	int index = (threadIdx.x + blockIdx.x) * blockDim.x;
+	temp[threadIdx.x] = a[index] * b[index];
+
+	__syncthreads();
+
+	if( 0 == threadIdx.x ) {
+		int sum = 0;
+		for( int i = 0; i < THREADS_PER_BLOCK; i++ )
+			sum += temp[i];
+		atomicAdd( c , sum );
+	}
+}
+
+/* Kernel for dot multiplication with threads
+__global__ void dot(int *a, int *b, int *c){
+	//Shared memory for results of multiplication
+	__shared__ int temp[N];
+	temp[threadIdx.x] = a[threadIdx.x] * b[threadIdx.x];
+
+	//Synchronize threads
+	__syncthreads();
+
+	//Thread 0 sums the pairwise products
+	if(0 == threadIdx.x){
+		int sum = 0;
+		for(int i = 0; i<N; i++){
+			sum += temp[i];
+		}
+		*c = sum;
+	}
+}*/
+
+int main(){
+	int *a, *b, *c;				//Host side arrays
+	int *d_a, *d_b, *d_c;		//Device side arrays
+	int size = N*sizeof(int);	//Size of N integers
+
+	//Allocate device copies of a, b and c
+	cudaMalloc((void**)&d_a, size);
+	cudaMalloc((void**)&d_b, size);
+	cudaMalloc((void**)&d_c, sizeof(int));
+
+	//Allocate host side arrays
+	a = (int*)malloc(size);
+	b = (int*)malloc(size);
+	c = (int*)malloc(sizeof(int));
+
+	//Populate the arrays
+	int i;
+	for(i = 0; i<N; i++){
+		a[i] = 5;
+		b[i] = 5;
+	}
+
+	//Copy inputs to device
+	cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
+	cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
+
+	// launch dot() kernel
+	dot<<<N/THREADS_PER_BLOCK, THREADS_PER_BLOCK>>>(d_a, d_b, d_c);
+
+	//Copy result back to host
+	cudaMemcpy(c, d_c, sizeof(int), cudaMemcpyDeviceToHost);
+
+	//Cleanup
+	cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+
+	//Print
+	printf("\nResults\n");
+	printf("GPU: %d\n", c[0]);
+
+	return 0;
+}
