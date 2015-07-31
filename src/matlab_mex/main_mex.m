@@ -4,8 +4,8 @@ clear all;clc;close all;
 %% Build mex
 mex mexFP.c
 mex mexSeed.c
-mex mexEncoder.c
-mex mexFastRayCast.c
+%mex mexEncoder.c
+%mex mexFastRayCast.c
 %% Set the random seeds
 mexSeed(); % Seed as time(NULL)
 
@@ -91,11 +91,8 @@ for k = 1:ttotal/T
 %% ray casting
    sonars = mexFastRayCast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1, covsonars);
    see_sonar(:,k) = sonars;
-
-%% encoders
-   
-   [dtick_L dtick_R] = mexEncoder( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
-   %[dtick_L dtick_R] = F_encoders( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
+%% encoders  
+   [dtick_L dtick_R] = F_encoders( x(k+1)-x(k),y(k+1)-y(k),th(k+1)-th(k),L,N,R);
    % this if perturbs the encoder measurements
    if rem(k,50)==0
        dtick_L = dtick_L + 1;
@@ -103,8 +100,10 @@ for k = 1:ttotal/T
    odometry(:,k+1) = F_estimate_p(odometry(:,k),dtick_L,dtick_R,L,N,R); 
    hold on
 %% particle filter
-    [p, w, P, CovSonars] = mexFP(p,dtick_L,dtick_R,L,N,R,alpha,map,max_range,angles,mapscale,1,sonars,CovSonars,w,k);                
-   
+    save('dynamic_param.mat','p','dtick_L', 'dtick_R','sonars','CovSonars','w','k')
+    save('static_param.mat','L', 'N', 'R','alpha','map', 'max_range','angles','mapscale')
+    [p, w, P, CovSonars] = mexFP(p,dtick_L,dtick_R,L,N,R,alpha,map,max_range,angles,mapscale,1,sonars,CovSonars,w,k);   
+    
 %% animation
     if 0%to anime or not to anime
         F_anima_map([x(k+1)*mapscale y(k+1)*mapscale th(k+1)], L*mapscale, fig, map,sonars*mapscale,angles)                   
