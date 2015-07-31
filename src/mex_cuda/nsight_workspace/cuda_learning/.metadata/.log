@@ -1,0 +1,49 @@
+!SESSION 2015-07-31 12:02:09.235 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -data /home/lsa/repos/particle-filter/src/mex_cuda/nsight_workspace/cuda_learning -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-07-31 12:02:40.923
+!MESSAGE Indexed 'addition' (0 sources, 76 headers) in 0.97 sec: 2,235 declarations; 2,488 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-07-31 12:02:58.420
+!MESSAGE Indexed 'vector_addition' (0 sources, 76 headers) in 0.50 sec: 2,235 declarations; 2,488 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-07-31 12:04:27.582
+!MESSAGE Indexed 'addition' (1 sources, 76 headers) in 0.43 sec: 2,247 declarations; 2,531 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-07-31 12:05:36.704
+!MESSAGE Indexed 'vector_addition' (1 sources, 76 headers) in 0.38 sec: 2,249 declarations; 2,563 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-07-31 12:24:20.166
+!MESSAGE Indexed 'dot_product' (0 sources, 76 headers) in 0.36 sec: 2,235 declarations; 2,488 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)
+!SESSION 2015-07-31 13:03:01.980 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2015-07-31 13:03:03.952
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2015-07-31 13:08:00.083
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIRunControl$9@310ac5e8): Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Context cannot be suspended. null' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2015-07-31 13:08:00.083
+!MESSAGE Context cannot be suspended.
+!SESSION 2015-07-31 13:08:55.352 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -data /home/lsa/repos/particle-filter/src/mex_cuda/nsight_workspace/cuda_learning -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2015-07-31 13:09:59.256
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.mi.service.MIRunControl$9@3d992030): Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Context cannot be suspended. null' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2015-07-31 13:09:59.256
+!MESSAGE Context cannot be suspended.
+
+!ENTRY org.eclipse.cdt.core 1 0 2015-07-31 13:10:40.850
+!MESSAGE Indexed 'dot_product' (1 sources, 76 headers) in 0.80 sec: 2,252 declarations; 2,569 references; 0 unresolved inclusions; 0 syntax errors; 0 unresolved names (0.00%)

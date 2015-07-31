@@ -1,0 +1,3 @@
+mex mexSeed.c
+mex mexEncoder.c
+mexSeed(); % Seed as time(NULL)
