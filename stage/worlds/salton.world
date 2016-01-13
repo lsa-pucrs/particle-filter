@@ -1,0 +1,153 @@
+# simple.world - basic world file example
+# Authors: Richard Vaughan
+# $Id$
+
+include "pioneer.inc"
+include "map.inc"
+include "sick.inc"
+
+# time to pause (in GUI mode) or quit (in headless mode (-g)) the simulation
+quit_time 3600 # 1 hour of simulated time
+
+paused 1
+
+# spatial resolution of the underlying occupancy grid. Default is 0.02m.
+resolution 0.02
+
+# set the multiple of real time that Stage should try to achieve. Default is 1. 
+# set to 0 to go as fast as possible.
+speedup 1 
+
+# configure the GUI window
+window
+(
+  size [ 635.000 666.000 ] # in pixels
+  scale 36.995   # pixels per meter
+  center [ -0.040  -0.274 ]
+  rotate [ 0  0 ]
+  			
+  show_data 1              # 1=on 0=off
+)
+
+# load an environment bitmap
+floorplan
+( 
+  name "cave"
+  size [16.000 16.000 0.800]
+  pose [0 0 0 0]
+  bitmap "bitmaps/cave.png"
+)
+
+define salton_laser sensor
+(
+  # define the size of each transducer [xsize ysize zsize] in meters
+  size [0.01 0.05 0.01 ] 
+  # define the range bounds [min max]
+  range [0 5.0]
+  # define the angular field of view in degrees
+  fov 75
+  # define the number of samples spread over the fov
+  samples 5
+)
+
+define salton_laser2 sensor
+(				
+  # factory settings for LMS200	
+  range [ 0.0 8.0 ]
+  pose [ 0 0 0.1 0 ]
+  fov 180
+  samples 180
+  #samples 90 # still useful but much faster to compute
+  color_rgba [0 0 1 0.15]
+)
+
+define salton_sonar ranger
+(
+ # 5 sonars do carro do salton
+ p2dxsonar( pose [ 0.075 0.130 0 90 ] )
+ p2dxsonar( pose [ 0.115 0.115 0 50 ] )
+ p2dxsonar( pose [ 0.150 0.080 0 30 ] )
+ p2dxsonar( pose [ 0.170 0.025 0 10 ] )
+ p2dxsonar( pose [ 0.170 -0.025 0 -10 ] )
+ )
+  
+# the robot model
+pioneer2dx_base_no_sonar
+(		  
+  # can refer to the robot by this name
+  name "r0"
+  pose [ -6.946 -6.947 0 45.000 ] 
+
+  block( 
+    points 8
+    point[0] [-0.2 0.12]
+    point[1] [-0.2 -0.12]
+    point[2] [-0.12 -0.2555 ]
+
+    point[3] [0.12 -0.2555]
+    point[4] [0.2 -0.12]
+    point[5] [0.2 0.12]
+    point[6] [0.12 0.2555]
+    point[7] [-0.12 0.2555]
+    z [0 0.22]
+  )
+
+  # pioneer2dx's sonars	will be ranger:0 and the laser will be ranger:1
+  #sicklaser( pose [ 0 0 0 0 ] 
+  #  ctrl "lasernoise" 
+  #   alwayson 1 # don't wait for a subscriber
+  #) 
+  
+  salton_laser2 (pose [ 0 0 0 0 ]
+       # plug the ../examples/ctrl/lasernoise.cc module into this laser
+     ctrl "lasernoise" 
+     alwayson 1 # don't wait for a subscriber
+  )
+ 
+  # demonstrate a plugin controller, implemented in examples/ctrl/wander.cc
+  # you probably should comment this out when using simple.cfg with Player
+  #ctrl "wander"
+  #ctrl "salton_wander"
+
+  # report error-free position in world coordinates
+  localization "gps"
+  localization_origin [ 0 0 0 0 ]
+  
+  # alternative odometric localization with simple error model
+  # localization "odom"         		# Change to "gps" to have impossibly perfect, global odometry
+  #  odom_error [ 0.05 0.05 0.1 ]   	# Odometry error or slip in X, Y and Theta
+                                   	# (Uniform random distribution)   
+  
+)
+
+# dummy model used only to create the particles with 'random_particles'
+define puck model(
+  size [ 0.080 0.080 0.100 ]
+  gui_move 1    # the model can be moved by the mouse in the GUI window
+  gui_nose 1    # draw a nose on the model showing its heading (positive X axis)
+  gui_outline 0        # draw a bounding box around the model, indicating its size
+  obstacle_return 0   # this model can collide with other models that have this property set
+  ranger_return -1     # If negative, this model is invisible to ranger sensors, and does not block propogation of range-sensing rays.
+  fiducial_return 0
+  gripper_return 0
+  laser_return 0
+  blob_return 0
+  
+)
+
+# the dummy model used to generate particles for a robot 
+puck
+( 
+  name "r0_dummy" 
+  pose [-3 -6 0 0 ] 
+  #particle color
+  color "red" 
+  # this parts enables the random_particles controller
+  # the parameters are:
+  #  - number of particles
+  #  - robot name
+  #  - floorplane name
+  #ctrl "random_particles 100 r0 cave"
+)
+
+

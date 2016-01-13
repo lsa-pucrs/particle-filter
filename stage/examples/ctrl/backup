@@ -1,0 +1,63 @@
+define partic model
+(
+	size [ 0.080 0.080 0.100 ]
+	block(
+	points 5
+		point[0] [0 0]
+		point[1] [0 1]
+		point[2] [1 1]
+		point[3] [3 0.5]
+		point[4] [1 0] 
+		z [0 0.1]
+	) 
+	pose [0 0 0 0 ] 
+	#particle color
+	color "blue" 
+)
+
+partic
+(
+	name "r0_p000"
+)
+
+partic
+(
+	name "r0_p001"
+)
+
+partic
+(
+	name "r0_p002"
+)
+
+partic
+(
+	name "r0_p003"
+)
+
+partic
+(
+	name "r0_p004"
+)
+
+partic
+(
+	name "r0_p005"
+)
+partic
+(
+	name "r0_p006"
+)
+partic
+(
+	name "r0_p007"
+)
+
+partic
+(
+	name "r0_p008"
+)
+partic
+(
+	name "r0_p009"
+)
