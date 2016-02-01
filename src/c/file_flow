@@ -1,0 +1,19 @@
+---- saves in matlab (inputs folder) ----
+set_value.mat 		<< w, p, L, N, R, alpha, map, max_range, angles, mapscale, P
+car.mat 			<< x, y, th
+dynamic_param.mat 	<< vec_dtick_L, vec_dtick_R, sonars, see_sonar, CovSonars
+final.mat 			<< x, y, th, see_sonar, odometry
+
+---- loads in c (filter folder) ----
+car.mat 			>> x, y, th
+dynamic_param.mat 	>> see_sonars, CovSonars
+set_value.mat 		>> map
+
+---- saves in c (filter folder) ----
+t_file.mat 			<< p(k)
+
+---- loads in matlab (outputs folder) ----
+set_value.mat 		>> mapscale, L, map, angles, p
+dynamic_param.mat 	>> sonars
+final.mat 			>> x, y, th, odometry, see_sonar
+t_file.mat 			>> p(k)

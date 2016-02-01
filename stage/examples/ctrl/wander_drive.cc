@@ -70,7 +70,7 @@ int wander(Model* mod, robot_t* robot){
 	// Drive
 	Pose robotpose = robot->pos->GetGlobalPose();
 	double d = (robotpose.x - destination.x)*(robotpose.x - destination.x) + (robotpose.y - destination.y)*(robotpose.y - destination.y);
-	cout << "d = " << d << "\tdestCnt = " << destCnt << endl;
+	//cout << "d = " << d << "\tdestCnt = " << destCnt << endl;
 	if(d < thresh){
 		destCnt++;
 		destination.x = x_dest[destCnt];
@@ -88,8 +88,8 @@ int wander(Model* mod, robot_t* robot){
 int poseUpdate(Model* mod, robot_t* robot){
 	Pose pose = robot->pos->GetPose();
 
-	printf( "Pose: [%.2f %.2f %.2f %.2f]\n",
-	  pose.x, pose.y, pose.z, pose.a );	  
+	//printf( "Pose: [%.2f %.2f %.2f %.2f]\n",
+	//  pose.x, pose.y, pose.z, pose.a );	  
 
 
 	

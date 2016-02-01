@@ -94,5 +94,5 @@ puck
   # Attach rangefinder
   # saltonLaser( pose [ 0 0 0 0 ] )
   
-  ctrl "random_particles 100 r0 cave"
+  ctrl "random_particles 1000 r0 cave"
 )

@@ -1,0 +1,62 @@
+# The set of languages for which implicit dependencies are needed:
+SET(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
+  )
+# The set of files for implicit dependencies of each language:
+SET(CMAKE_DEPENDS_CHECK_CXX
+  "/home/renan/git/particle-filter/stage/libstage/ancestor.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/ancestor.o"
+  "/home/renan/git/particle-filter/stage/libstage/block.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/block.o"
+  "/home/renan/git/particle-filter/stage/libstage/blockgroup.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/blockgroup.o"
+  "/home/renan/git/particle-filter/stage/libstage/camera.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/camera.o"
+  "/home/renan/git/particle-filter/stage/libstage/canvas.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/canvas.o"
+  "/home/renan/git/particle-filter/stage/libstage/color.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/color.o"
+  "/home/renan/git/particle-filter/stage/libstage/file_manager.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/file_manager.o"
+  "/home/renan/git/particle-filter/stage/libstage/gl.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/gl.o"
+  "/home/renan/git/particle-filter/stage/libstage/logentry.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/logentry.o"
+  "/home/renan/git/particle-filter/stage/libstage/model.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_actuator.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_actuator.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_blinkenlight.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_blinkenlight.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_blobfinder.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_blobfinder.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_callbacks.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_callbacks.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_camera.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_camera.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_draw.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_draw.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_fiducial.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_fiducial.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_gripper.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_gripper.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_lightindicator.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_lightindicator.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_position.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_position.o"
+  "/home/renan/git/particle-filter/stage/libstage/model_ranger.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/model_ranger.o"
+  "/home/renan/git/particle-filter/stage/libstage/option.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/option.o"
+  "/home/renan/git/particle-filter/stage/libstage/options_dlg.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/options_dlg.o"
+  "/home/renan/git/particle-filter/stage/libstage/powerpack.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/powerpack.o"
+  "/home/renan/git/particle-filter/stage/libstage/region.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/region.o"
+  "/home/renan/git/particle-filter/stage/libstage/stage.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/stage.o"
+  "/home/renan/git/particle-filter/stage/libstage/texture_manager.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/texture_manager.o"
+  "/home/renan/git/particle-filter/stage/libstage/typetable.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/typetable.o"
+  "/home/renan/git/particle-filter/stage/libstage/vis_strip.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/vis_strip.o"
+  "/home/renan/git/particle-filter/stage/libstage/world.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/world.o"
+  "/home/renan/git/particle-filter/stage/libstage/worldfile.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/worldfile.o"
+  "/home/renan/git/particle-filter/stage/libstage/worldgui.cc" "/home/renan/git/particle-filter/stage/libstage/CMakeFiles/stage.dir/worldgui.o"
+  )
+SET(CMAKE_CXX_COMPILER_ID "GNU")
+
+# Pairs of files generated by the same build rule.
+SET(CMAKE_MULTIPLE_OUTPUT_PAIRS
+  "/home/renan/git/particle-filter/stage/libstage/libstage.so" "/home/renan/git/particle-filter/stage/libstage/libstage.so.4.1.1"
+  )
+
+
+# Targets to which this target links.
+SET(CMAKE_TARGET_LINKED_INFO_FILES
+  )
+
+# The include file search paths:
+SET(CMAKE_C_TARGET_INCLUDE_PATH
+  "."
+  "libstage"
+  "replace"
+  "/usr/lib/fltk"
+  "."
+  )
+SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
+SET(CMAKE_Fortran_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})
+SET(CMAKE_ASM_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

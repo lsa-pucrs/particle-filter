@@ -5,6 +5,7 @@
 */
 #include "stage.hh"
 #include <algorithm>
+#include <time.h>
 
 using namespace Stg;
 using namespace std;
@@ -15,6 +16,7 @@ static double alpha[] = {1,25,25,0.01};
 
 //Globalzão
 int k = 0;
+vector<float> time_vec;
 
 // weights vector
 vector<double> weights;
@@ -68,11 +70,11 @@ extern "C" int Init( Model* mod, CtrlArgs* args )
     assert( 0 );
     return 1;
   }
-  if (particles <= 0 || particles > 999){
+  /*if (particles <= 0 || particles > 999){
     printf("\n\nAn exception occurred.\n Usage: random_particles <number of particles> <robot_name>.\nNumber of particles must be between 1 and 999.\n\n");
     assert( 0 );
     return 1;
-  }
+  }*/
   
   // check the robot name
   Model* rn = w->GetModel(words[2]);
@@ -191,8 +193,8 @@ int PositionUpdate( ModelPosition* pos, robot_t* robot )
 	 double displacement = sqrt((pose.x-ppose.x)*(pose.x-ppose.x) + (pose.y-ppose.y)*(pose.y-ppose.y));
      double rot = pose.a - ppose.a;
      
-     cout << "pose: " << pose.String() << endl;
-	 cout << "ppose: " << ppose.String() << endl;
+     //cout << "pose: " << pose.String() << endl;
+	 //cout << "ppose: " << ppose.String() << endl;
 	 /*
 	 printf("callback attributes: %02f, %02f, %s, %d\n",
 		  robot->floorplan_size_x,
@@ -203,6 +205,7 @@ int PositionUpdate( ModelPosition* pos, robot_t* robot )
      
      // update the particle position according to the robot's movement
      
+     clock_t begin_time = clock();
      for (i=0; i<robot->number_particles; i++){
 		// get particle name
 		sprintf(particle_name, "%s_p%03d", robot->robot_name.c_str(), i);
@@ -224,10 +227,10 @@ int PositionUpdate( ModelPosition* pos, robot_t* robot )
         // Set particle pose
         p->SetGlobalPose(particle_pose);
         
-        cout << "\nFuture_pose: " << bar_p.String() << endl;
-        cout << "Particle_pose: " << pose.String() << endl;
-        cout << "Robot pose: " << robot_mod->GetGlobalPose().String() << endl;       
-        cout << "Displacement: " << displacement << endl;
+        //cout << "\nFuture_pose: " << bar_p.String() << endl;
+        //cout << "Particle_pose: " << pose.String() << endl;
+        //cout << "Robot pose: " << robot_mod->GetGlobalPose().String() << endl;       
+        //cout << "Displacement: " << displacement << endl;
         
         // move the particle
 	    //p->AddToPose(displacement); // displacement = barp
@@ -274,7 +277,18 @@ int PositionUpdate( ModelPosition* pos, robot_t* robot )
 		}
 		
 	 }
-	 
+
+	 if((k % 100) == 0 && k > 100){
+	 	//do something
+	 	float time_sum = 0;
+	 	for(int i = 0; i<100; i++)
+	 		time_sum += time_vec[i];
+	 	cout << "\nAverage time elapsed (100 samples): " << time_sum/100 << endl;
+	 	time_vec.clear();
+	 }
+	 else
+	 	time_vec.push_back(float(clock() - begin_time)/CLOCKS_PER_SEC);
+
 	 //cout << "\nTotal Weight: " << total_weight << endl;
 	 
 	 for (i=0; i<robot->number_particles; i++){

@@ -7,6 +7,8 @@ map = F_load_map(mapstreacth);
 mapscale  = 120; % each grid in 'map' represents 1/mapscale meters
 
 %% parameters
+raycast_inside = 0;
+raycast_outside = 0;
 ttotal = 270;
 T  = .5;     % sampling time
 R  = 0.02;   % wheel radius 2cm
@@ -26,7 +28,7 @@ vr = 1;
 vl = 1;
 
 %% Particle Filter parameters
-alpha     = [2 50 50 2]*1;
+alpha     = [0 0 50 0]*1;
 CovSonars = 2.5;
 global p
 Np = 50;
@@ -79,8 +81,9 @@ for k = 1:ttotal/T
    [t,cont] = ode23(@F_dif_drive_car,[0 T],[x(k) y(k) th(k)],options,vr,vl,R,L);
    x(k+1) = cont(end,1); y(k+1) = cont(end,2); th(k+1) = cont(end,3);
       
-%% ray casting   
+%% ray casting
    sonars = Fast_ray_cast(x(k+1),y(k+1),th(k+1),map,max_range,angles,mapscale,1);%
+   raycast_outside = raycast_outside + 1;
    sonars = sonars + abs(rand(5,1)-0.5)*covsonars;
    see_sonar(:,k) = sonars;
 
@@ -95,26 +98,26 @@ for k = 1:ttotal/T
    
 %% particle filter
    for i = 1:Np
-       % estimate movement according to encoders
+       % Estimate movement according to encoders
        barp   = F_estimate_p(p(:,i),dtick_L,dtick_R,L,N,R);        
        
-       % throw in some variation in the RTR model       
+       % Throw in some variation in the RTR model       
        p(:,i) = F_sample_odometry(p(:,i),barp,alpha);                
                     
-       % compute particle probability                                 
+       % Particle probability                                 
        if map(max(1,min(ceil(p(2,i)*mapscale),size(map,1))),max(1,min(ceil(p(1,i)*mapscale),size(map,2))))   
            w(i) = 0;   % if on obstacle or outside map           
-       else % else compute the particle probability based on sonars
-           % simulate the sonars for the particles
+       else           
+           % Simulate the sonars for the particles
            z = Fast_ray_cast(p(1,i),p(2,i),p(3,i),map,max_range,angles,mapscale,1);%
+           raycast_inside = raycast_inside + 5;
            for j = 1:length(sonars)
+              % Calculate the probability for the particle
               w(i) = w(i)*F_measurProb(z(j),sonars(j),CovSonars);
-              %test(j) = F_measurProb(z(j),sonars(j),CovSonars);
            end
        end
-       
    end   
-   w = w/sum(w);
+   w = w/sum(w);    % Normalize the probabilities
    
    % sampling wheel
    if rem(k,15)==0 && k>10 % choose "-1" for open loop simulation of the Part. Filt
