@@ -1,8 +1,8 @@
 # INSTRUCTIONS
 
 ## Prerequisites
- * Have MATLAB installed <<<<
- * Have MAT File I/O Library installed (version 1.5.x) <<<<
+ * Have MATLAB installed
+ * Have MAT File I/O Library installed (version 1.5.x)
 
 ## Usage
 
